@@ -1,0 +1,91 @@
+body
+{
+	background-color: red;
+	font-family: Arial;
+	text-decoration: none;
+	background-color: #EBEBEB;
+}
+@media screen and (min-width: 750px) {
+	div#frame
+	{
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		grid-gap: 1em;
+	}
+}
+div#frame
+{
+	overflow: hidden;
+}
+
+#wrapper
+{
+	overflow: auto;
+	min-height: 350px;
+}
+
+.grid-top-left
+{
+	grid-column: 1;
+	grid-row: 1;
+}
+
+.grid-top-right
+{
+	grid-column: 2;
+	grid-row: 1;
+}
+
+.title
+{
+	border-radius: 15px 50px;
+	padding: 1em;
+	background-color: #00A6DE;
+}
+
+div.data-object
+{
+	margin-left: 2em;
+	padding: 1em;
+	
+	width: auto;
+	height: auto;
+	display: inline-block;
+}
+
+#countryList
+{
+	display: block;
+    overflow-x: auto;
+}
+
+table.table1
+{
+	text-align: left;
+}
+th, td
+{
+	padding: 5px;
+}
+
+a
+{
+	text-decoration: none;
+	color: black;
+}
+
+a:hover, a:active
+{
+	color: white;
+}
+
+a.button
+{
+	border: 1px solid black;
+	padding: 2px;
+}
+
+.centred
+{
+	text-align: center;
+}

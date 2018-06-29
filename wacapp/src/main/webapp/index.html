@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+ <title>Dynamic Example</title>
+ 	<body>
+ 		<form action="DynamicServlet.do" method="get">
+ 		<div>
+ 			<input type="text" name="username" />
+ 			<input type="submit" value="Go!" />
+ 		</div>
+ 		</form>
+ 		
+ 		<form action="CalculateServlet.do" method="get">
+ 		<div>
+ 			<input type="number" name="firstnumb"/>
+ 			<input type="number" name="secondnumb"/>
+ 		</div>
+ 		
+ 		<div>
+			<input type="radio" name="r1" value="add" />addition
+			<br />
+			<input type="radio" name="r2" value="sub" />subtraction 
+			<br />
+			<input type="radio" name="r3" value="mul" />multiplication
+			<br />
+			<input type="radio" name="r4" value="div" />division
+			<br /> 
+		</div>
+		<input type="submit" value="Calculate" /> 		
+ 		</form>
+ 	</body>
+</html>

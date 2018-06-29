@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+ <title>JavaScript Rekenmachine</title>
+<head>
+	<link rel="stylesheet" type="text/css" href="rknmachine.css">
+	<style>
+		div#frame {
+			background-color: gray;
+			margin: 1em;
+			padding: 0.5em;
+			text-align: center;
+			width: 13.5em;
+		}
+		.textview {
+			background-color: white;
+			height: 1.5em;
+			margin: 0.5em;
+			padding-right: 0.3em;
+			text-align: right;
+		}
+		.button {
+			height: 3.5em;
+			margin-bottom: 0.3em;
+			width: 3.5em;
+		}
+	</style>
+</head>
+ <body>
+	<div id="frame">
+		<form name="form">
+			<input class="textview" name="textview">
+		</form>
+
+		<input class="button" type="button" value="7" onclick="insert(7)">
+		<input class="button" type="button" value="8" onclick="insert(8)">
+		<input class="button" type="button" value="9" onclick="insert(9)">
+		<input class="button" type="button" value="/" onclick="insert('/')">
+		<input class="button" type="button" value="4" onclick="insert(4)">
+		<input class="button" type="button" value="5" onclick="insert(5)">
+		<input class="button" type="button" value="6" onclick="insert(6)">
+		<input class="button" type="button" value="*" onclick="insert('*')">
+		<input class="button" type="button" value="1" onclick="insert(1)">
+		<input class="button" type="button" value="2" onclick="insert(2)"> 
+		<input class="button" type="button" value="3" onclick="insert(3)">
+		<input class="button" type="button" value="-" onclick="insert('-')">
+		<input class="button" type="button" value="C" onclick="clean()">
+		<input class="button" type="button" value="0" onclick="insert(0)">
+		<input class="button" type="button" value="=" onclick="equal()">
+		<input class="button" type="button" value="+" onclick="insert('+')">
+	</div>
+	<script src="rknmachine.js"></script>
+ </body>
+</html>

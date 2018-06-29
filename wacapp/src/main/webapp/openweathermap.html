@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href="style.css">
+	</head>
+	<title>Openweathermap</title>
+	<body>
+ 	<div id="frame">
+ 		<div id="wrapper" class="grid-top-left">
+ 			<div id="mijnlocatie" class="title"><h1>Mijn Locatie</h1></div>
+ 			<div id="myLocation" class="data-object">
+ 				Landcode:	<label id="landcode"></label><br>
+ 				Land:		<label id="land"></label><br>
+ 				Regio:		<label id="regio"></label><br>
+ 				Stad:		<label id="stad"></label><br>
+ 				Postcode:	<label id="postcode"></label><br>
+ 				Latitude:	<label id="latitude"></label><br>
+ 				Longitude:	<label id="longitude"></label><br>
+ 				IP adess:	<label id="ip"></label><br>
+ 			</div>
+ 		</div>
+ 		<div id="wrapper" class="grid-top-right">
+ 			<div id="mijnweer" class="title"><h1>Het weer in <label id="mijnCity"></label></h1></div>
+ 			<div id="weatherInfo"></div>
+ 				Temperatuur:			<label id="temperatuur"></label><br>
+ 				Luchtvochtigheid:		<label id="luchtvochtigheid"></label><br>
+ 				Windsnelheid:			<label id="windsnelheid"></label><br>
+ 				Zonsopgang:				<label id="zonsopgang"></label><br>
+ 				Zonsondergang:			<label id="zonsondergang"></label><br>
+ 		</div>
+ 	</div>
+ 		<div id="wrapper">
+ 			<div id="countryList" class="title" style="overflow-x:auto;"><h1>Vakantie bestemmingen</h1></div>
+ 			<table id="vakantieListTable" class="table1">
+ 				<tr>
+ 					<th>Land</th>
+ 					<th>Hoofdstad</th>
+ 					<th>Regio</th>
+ 					<th>Oppervlakte</th>
+ 					<th>Inwoners</th> 
+ 				</tr>
+ 			</table>
+ 		</div>
+ 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ 		<script>
+ 		var lat = "lat=";
+ 		var lon = "&lon=";
+ 		var first = "https://api.openweathermap.org/data/2.5/weather?"
+ 		var second = "&APPID=a8dc8467cdd06eec26b282ec74e77d2b";
+ 		var url;
+ 		
+ 		$(document).ready(function(){
+ 			initPage();
+ 			
+ 			$("#delete").click(function (){
+ 				var uri = "restservices/countries/delete/" + $("#name").val();
+ 				$.ajax(uri, {
+ 					method: "delete",
+ 					succes: function(response) {
+ 						console.log("land is verwijderd");
+ 					},
+ 					error: function(response){
+ 						console.log("land is niet verwijderd");
+ 					}
+ 				});
+ 			});
+
+ 		});
+ 		
+ 		
+ 		
+ 		function initPage(){	
+ 			fetch('https://ipapi.co/json/')
+ 		  		.then(function(response) {
+ 		    	return response.json();
+ 		  		})
+ 		  		.then(function(myJson) {
+ 		    		console.log(myJson);
+ 		    		document.getElementById("landcode").innerHTML = myJson.country;
+					document.getElementById("land").innerHTML = myJson.country_name;
+					document.getElementById("regio").innerHTML = myJson.region;
+					document.getElementById("stad").innerHTML = myJson.city;
+					document.getElementById("postcode").innerHTML = myJson.postal;
+					document.getElementById("latitude").innerHTML = myJson.latitude;
+					document.getElementById("longitude").innerHTML = myJson.longitude;
+					document.getElementById("ip").innerHTML = myJson.ip;
+					document.getElementById("mijnCity").innerHTML = myJson.city;
+ 		  		})
+ 			
+ 			showWeather();
+ 			loadCountries();
+
+ 		}
+ 		
+	 	function showWeather(latitude, longitude){
+ 			fetch('https://ipapi.co/json/')
+ 			.then(function(response){
+ 				return response.json();
+ 			})
+ 			.then(function(goodJson){
+ 				var url = first + lat + goodJson.latitude + lon + goodJson.longitude + second;
+ 				console.log(url);
+ 				fetch(url)
+ 				.then(function(response){
+ 		  			return response.json();
+ 		  		})
+ 		  		.then(function(myWeather){
+ 		 			console.log(myWeather);
+ 		  			document.getElementById("temperatuur").innerHTML = myWeather.main.temp;
+ 		  			document.getElementById("luchtvochtigheid").innerHTML = myWeather.main.humidity + "%";
+ 		  			document.getElementById("windsnelheid").innerHTML = myWeather.wind.speed + " km/u";
+ 		  			document.getElementById("zonsopgang").innerHTML = new Date(myWeather.sys.sunrise*1000);
+ 		  			document.getElementById("zonsondergang").innerHTML = new Date(myWeather.sys.sunset*1000);
+ 		  		})
+ 			})
+ 		}
+ 		
+ 		function loadCountries(){
+ 			fetch("restservices/countries/")
+ 			.then(function(response){
+ 				return response.json();
+ 			})
+ 			.then(function(myCountries){
+ 				for (let country of myCountries){
+ 					var tr = $('<tr/>')
+ 					tr.append("<td>" + country.name + "</td>");
+ 					tr.append("<td>" + country.capital + "</td>");
+ 					tr.append("<td>" + country.region + "</td>");
+ 					tr.append("<td>" + country.surface + "</td>");
+ 					tr.append("<td>" + country.population + "</td>");
+ 					tr.append("<td>" + "<button type='button' id='delete'>Verwijder</button>" + "</td>");
+ 					$('.table1').append(tr);
+
+ 				}
+ 			})
+ 		}
+ 		</script>
+ 		
+ 		
+	</body>
+</html>
