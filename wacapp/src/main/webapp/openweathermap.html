@@ -50,12 +50,14 @@
  		var first = "https://api.openweathermap.org/data/2.5/weather?"
  		var second = "&APPID=a8dc8467cdd06eec26b282ec74e77d2b";
  		var url;
+ 		var latit;
+ 		var longit;
  		
  		$(document).ready(function(){
  			initPage();
  			
  			$("#delete").click(function (){
- 				var uri = "restservices/countries/delete/" + $("#name").val();
+ 				var uri = "restservices/countries/delete/" + $("#countryname	").val();
  				$.ajax(uri, {
  					method: "delete",
  					succes: function(response) {
@@ -87,9 +89,12 @@
 					document.getElementById("longitude").innerHTML = myJson.longitude;
 					document.getElementById("ip").innerHTML = myJson.ip;
 					document.getElementById("mijnCity").innerHTML = myJson.city;
+					var latitude = myJson.latitude;
+					var longitude = myJson.longitude;
  		  		})
  			
- 			showWeather();
+ 			console.log(latitude, longitude);
+ 			showWeather(latitude, longitude);
  			loadCountries();
 
  		}
@@ -100,7 +105,7 @@
  				return response.json();
  			})
  			.then(function(goodJson){
- 				var url = first + lat + goodJson.latitude + lon + goodJson.longitude + second;
+ 				var url = first + lat + latitude.value + lon + longitude + second;
  				console.log(url);
  				fetch(url)
  				.then(function(response){
@@ -125,14 +130,15 @@
  			.then(function(myCountries){
  				for (let country of myCountries){
  					var tr = $('<tr/>')
- 					tr.append("<td>" + country.name + "</td>");
+ 					//tr.append("<td id='countrycode'><a href='restservices/countries/" + country.code + "'>" + country.name + "</a></td>");
+ 					tr.append("<td onclick='showWeather(" + country.latitude + "," + country.longitude + ")'>" + country.name + "</td>");
  					tr.append("<td>" + country.capital + "</td>");
  					tr.append("<td>" + country.region + "</td>");
  					tr.append("<td>" + country.surface + "</td>");
  					tr.append("<td>" + country.population + "</td>");
  					tr.append("<td>" + "<button type='button' id='delete'>Verwijder</button>" + "</td>");
  					$('.table1').append(tr);
-
+ 
  				}
  			})
  		}
